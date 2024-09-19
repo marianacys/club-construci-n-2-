@@ -2,61 +2,68 @@ package app.model;
 
 import java.sql.Date;
 
+
+
 public class Invoice {
-        private long invoiceid;
-        private long personid;
-        private long partnetid;
-        private int affiliationdate;
-        private float totalvalue;
-        private String state;
+    private long id;
+    private long personId;
+    private long partnerId;
+    private Date creationDate;
+    private double amount;
+    private String status;
 
-        public Invoice (){}
+    public Invoice() {
+    }
 
-        public long getinvoiceid (){
-        return invoiceid;
-        }
+    public long getId() {
+        return id;
+    }
 
-        public long getpersonid () {
-        return personid;
-        }
+    public void setId(long id) {
+        this.id = id;
+    }
 
-        public long getpartnetid () {
-        return partnetid;
-        }
-        public int getaffiliationdate () {
-        return affiliationdate;
-        }
+    public long getPersonId() {
+        return personId;
+    }
 
-        public float gettotalvalue () {
-        return totalvalue;
-        }
+    public void setPersonId(long personId) {
+        this.personId = personId;
+    }
 
-        public String getstate () {
-        return state;
-        }
+    public long getPartnerId() {
+        return partnerId;
+    }
 
-        public void setinvoiceid (long invoiceid) {
-        this.invoiceid=invoiceid;
-        }
+    public void setPartnerId(long partnerId) {
+        this.partnerId = partnerId;
+    }
 
-        public void setpersonid (long personid) {
-        this.personid=personid;
-        }
+    public Date getCreationDate() {
+        return creationDate;
+    }
 
-        public void setpartnetid (long partnetid) {
-        this.partnetid=partnetid;
-        }
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
 
-        public void setmaffiliationdate (int affiliationdate) {
-        this.affiliationdate=affiliationdate;
-        }
+    public double getAmount() {
+        return amount;
+    }
 
-        public void settotalvalue (float totalvalue) {
-        this.totalvalue=totalvalue;
-        }
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
 
-        public void setstate (String state) {
-        this.state=state;
-        }
-        }
-     
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    
+    
+
+}
+

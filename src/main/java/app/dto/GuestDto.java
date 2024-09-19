@@ -1,19 +1,27 @@
 package app.dto;
 
-public class GuestDto {
-    private long invitationId; 
-    private long partnerId;    
-    private String invitationState;
+import app.dto.interfaces.GuestDtoInterface;
+
+public class GuestDto implements GuestDtoInterface{
+    private long id;
     private long userId;
+    private long partnerId;
+    private String status;
 
-    public GuestDto() {}
-
-    public long getInvitationId() { 
-        return invitationId;
+    public long getId() {
+        return id;
     }
 
-    public void setInvitationId(long invitationId) { 
-        this.invitationId = invitationId;
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
     public long getPartnerId() {
@@ -24,20 +32,14 @@ public class GuestDto {
         this.partnerId = partnerId;
     }
 
-    public String getInvitationState() {
-        return invitationState;
+    public String getStatus() {
+        return status;
     }
 
-    public void setInvitationState(String invitationState) { 
-        this.invitationState = invitationState;
+    public void setStatus(String status) {
+        this.status = status;
     }
-    public long getUserId() { // Método UserId
-        return userId;
-    }
-
-    public void setUserId(long userId) { // Método UserId
-        this.userId = userId;
-    }
+    
+    
 }
- 
 

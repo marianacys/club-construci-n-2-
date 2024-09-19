@@ -1,52 +1,76 @@
 package app.dto;
 
-public class InvoiceDetailDto{
-        private long detailid;
-        private long invoiceid;
-        private int itemnumber;
-        private float itemvalue;
-        private String concept;
+import app.dto.interfaces.InvoiceDetailDtoInterface;
 
-        public InvoiceDetailDto (){}
+import app.controllers.Utils;
+import app.controllers.validator.InvoiceDetailValidator;
 
-        public long getdetailid () {
-        return detailid;
-        }
 
-        public long getinvoiceid () {
-        return invoiceid;
-        }
+public class InvoiceDetailDto implements InvoiceDetailDtoInterface{
+    private final InvoiceDetailValidator invoiceDetailValidator = new InvoiceDetailValidator();
 
-        public int getitemnumber () {
-        return itemnumber;
-        }
+    private long id;
+    private long invoiceId;
+    private int itemNumber;
+    private String description;
+    private double itemValue;
 
-        public float getitemvalue () {
-        return itemvalue;
-        }
+    @Override
+    public void getInvoiceDetailDescriptionDto() throws Exception {
+        System.out.println("Ingrese la descrpción del detalle");
+        String invoiceDetailDesctiptionDto = Utils.getReader().nextLine();
+        this.invoiceDetailValidator.validDescription( invoiceDetailDesctiptionDto );
+        this.description = invoiceDetailDesctiptionDto ;
+    }
 
-        public String getconcept () {
-        return concept;
-        }
+    @Override
+    public void getInvoiceDetailAmountDto() throws Exception {
+        System.out.println("Ingrese el monto del detalle");
+        String invoiceDetailAmountDto = Utils.getReader().nextLine();
+        this.itemValue = this.invoiceDetailValidator.validAmount( invoiceDetailAmountDto ) ;
+    }
+    
+    
+    public long getId() {
+        return id;
+    }
 
-        public void setdetailid (long detailid) {
-        this.detailid=detailid;
-        }
+    public void setId(long id) {
+        this.id = id;
+    }
 
-        public void setinvoiceid (long invoiceid) {
-        this.invoiceid=invoiceid;
-        }
+    public long getInvoiceId() {
+        return invoiceId;
+    }
 
-        public void setitemnumber (int itemnumber) {
-        this.itemnumber=itemnumber;
-        }
+    public void setInvoiceId(long invoiceId) {
+        this.invoiceId = invoiceId;
+    }
 
-        public void setitemvalue (float itemvalue) {
-        this.itemvalue=itemvalue;
-        }
+    public int getItemNumber() {
+        return itemNumber;
+    }
 
-        public void setcaoncept (String concept) {
-        this.concept=concept;
-        }
-        }  
+    public void setItemNumber(int itemNumber) {
+        this.itemNumber = itemNumber;
+    }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public double getItemValue() {
+        return itemValue;
+    }
+
+    public void setItemValue(double itemValue) {
+        this.itemValue = itemValue;
+    }
+
+    
+
+}

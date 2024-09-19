@@ -1,36 +1,44 @@
-
 package app.model;
 
 public class Guest {
-        private long invitationid;
-        private long partnetid;
-        private String invitationstate;
+    private long id;
+    private long userId;
+    private long partnerId;
+    private String status;
 
-        public Guest (){}
+    public long getId() {
+        return id;
+    }
 
-        public long getinvitationid (){
-        return invitationid;
-        }
+    public void setId(long id) {
+        this.id = id;
+    }
 
-        public long getpartnetid (){
-        return partnetid;
-        }
+    public long getUserId() {
+        return userId;
+    }
 
-        public String getinvitationstate (){
-        return invitationstate;
-        }
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
 
-        public void setinvitationid (long invitationid){
-        this.invitationid=invitationid;
-        }
+    public long getPartnerId() {
+        return partnerId;
+    }
 
-        public void setsocioid (long partnetid){
-             this.partnetid=partnetid;
-        }
+    public void setPartnerId(long partnerId) {
+        this.partnerId = partnerId;
+    }
 
-        public void setinvitationstate (String invitationstate){
-             this.invitationstate=invitationstate;
-        }
-        } 
+    public String getStatus() {
+        return status;
+    }
 
-  
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    
+    
+    
+}
+

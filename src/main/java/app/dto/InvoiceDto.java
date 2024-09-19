@@ -3,28 +3,43 @@ package app.dto;
 import java.sql.Date;
 
 public class InvoiceDto {
-    private UserDto idUser;
-    private Date generationDate;
+    private long id;
+    private long personId;
+    private long partnerId;
+    private Date creationDate;
     private double amount;
-    private String description;
-    private boolean status;
+    private String status;
 
-    public InvoiceDto() {}
-
-    public UserDto getIdUser() {
-        return idUser;
+    public long getId() {
+        return id;
     }
 
-    public void setIdUser(UserDto idUser) {
-        this.idUser = idUser;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public Date getGenerationDate() {
-        return generationDate;
+    public long getPersonId() {
+        return personId;
     }
 
-    public void setGenerationDate(Date generationDate) {
-        this.generationDate = generationDate;
+    public void setPersonId(long personId) {
+        this.personId = personId;
+    }
+
+    public long getPartnerId() {
+        return partnerId;
+    }
+
+    public void setPartnerId(long partnerId) {
+        this.partnerId = partnerId;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
     }
 
     public double getAmount() {
@@ -35,20 +50,13 @@ public class InvoiceDto {
         this.amount = amount;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public boolean isStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(String status) {
         this.status = status;
     }
+    
+    
 }
-
