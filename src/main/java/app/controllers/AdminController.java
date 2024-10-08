@@ -1,20 +1,28 @@
 package app.controllers;
 
+import app.dto.GuestDto;
 import app.dto.PartnerDto;
+import app.service.HistoryInvoice;
 import app.service.LoginService;
+import app.dao.PartnerDao;
+import app.dao.GuestDao;
+import java.util.ArrayList; 
+import java.util.List; 
 import java.util.Scanner;
 
 public class AdminController implements ControllerInterface {
-    private static final String MENU = "Ingrese la opción que desea \n 1. PERSONAS \n 2. USUARIOS \n 3. SOCIOS \n 4. INVITADOS \n 9. Para cerrar sesión \n";
+    private static final String MENU = "Ingrese la opcion que desea \n 1. PERSONAS \n 2. USUARIOS \n 3. SOCIOS \n 4. INVITADOS \n 5. HISTORIAL FACTURAS \n 9. Para cerrar sesion \n";
 
     private final ControllerInterface personController;
     private final ControllerInterface userController;
     private final ControllerInterface partnerController;
     private final ControllerInterface guestController;
-    private String PartnerDto;
-    private Iterable<PartnerDto> partnerList;
+    private final HistoryInvoice historyInvoice = new HistoryInvoice();  // Instancia de HistoryInvoice
+    private final PartnerDao partnerDao = new PartnerDao();
+    private final GuestDao guestDao = new GuestDao();
+    
+    private List<PartnerDto> partnerList = new ArrayList<>();
 
-   
     public AdminController(ControllerInterface personController, ControllerInterface userController,
                       ControllerInterface partnerController, ControllerInterface guestController) {
         this.personController = personController;
@@ -57,67 +65,99 @@ public class AdminController implements ControllerInterface {
             case "4":
                 this.guestController.session();
                 return true;
+            case "5":
+                showInvoiceHistoryMenu();
+                return true;
             case "9":
-                System.out.println("Se ha cerrado sesión");
+                System.out.println("Se ha cerrado sesion");
                 return false;
             default:
-                System.out.println("Ingrese una opción válida");
+                System.out.println("Ingrese una opcion valida");
                 return true;
         }
     }
-    private void numberPertnersVIP() {
+
+    // Mostrar menu para el historial de facturas
+    private void showInvoiceHistoryMenu() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Ingrese nombre de usuario:");
-        String nombre = scanner.nextLine();
-        System.out.println("Ingrese contraseña:");
-        String contraseña = scanner.nextLine();
-        System.out.println("Ingrese tipo de suscripción (Regular/VIP):");
-        String tipoSuscripcion = scanner.nextLine();
+        System.out.println("Seleccione el tipo de historial:\n1. Club Completo\n2. Socio\n3. Invitado");
+        String option = scanner.nextLine();
 
-        PartnerDto partner = new PartnerDto(nombre, contraseña, tipoSuscripcion);
-        partner.add(partner);
-        System.out.println("Socio registrado exitosamente: " + PartnerDto);
-    }
-
-    private void PartnerTypeDto() {
-        System.out.println("Lista de Socios:");
-        for (PartnerDto Partner : PartnerDto) {
-            System.out.println(PartnerDto);
+        try {
+            switch (option) {
+                case "1":
+                    historyInvoice.showClubHistory();
+                    break;
+                case "2":
+                    System.out.println("Ingrese el ID del socio:");
+                    int partnerId = scanner.nextInt();
+                    PartnerDto partnerDto = partnerDao.findById(partnerId);
+                    if (partnerDto != null) {
+                        historyInvoice.showPartnerHistory(partnerDto);
+                    } else {
+                        System.out.println("Socio no encontrado.");
+                    }
+                    break;
+                case "3":
+                    System.out.println("Ingrese el ID del invitado:");
+                    int guestId = scanner.nextInt();
+                    GuestDto guestDto = guestDao.findById(guestId);
+                    if (guestDto != null) {
+                        historyInvoice.showGuestHistory(guestDto);
+                    } else {
+                        System.out.println("Invitado no encontrado.");
+                    }
+                    break;
+                default:
+                    System.out.println("Opcion no valida.");
+            }
+        } catch (Exception e) {
+            System.out.println("Error al mostrar el historial: " + e.getMessage());
         }
     }
 
-   private void mostrarListaSocios() {
-    System.out.println("Lista de Socios:");
-    
-    // Aquí se asume que tienes una lista de socios llamada partnerList
-    for (PartnerDto partner : partnerList) {
-        System.out.println(partner);  // Suponiendo que PartnerDto tiene un método toString() implementado
-    }
-}
 
- private void PartnerAmountIncraseDto() {
+    public void add(String nombre, String contraseña, String subscriptionType) {
+        long vipCount = partnerList.stream()
+                                   .filter(p -> "VIP".equals(p.getType()))
+                                   .count();
+
+        if ("VIP".equals(subscriptionType) && vipCount >= 5) {
+            System.out.println("No se pueden agregar más socios VIP. Limite alcanzado.");
+            return;
+        }
+
+        PartnerDto partner = new PartnerDto(nombre, contraseña, subscriptionType);
+        partnerList.add(partner);
+        System.out.println("Socio registrado exitosamente: " + partner.getName());
+    }
+
+    public void showPartnerList() {
+        System.out.println("Lista de Socios:");
+        for (PartnerDto partner : partnerList) {
+            System.out.println(partner.getName() + " - " + partner.getType());
+        }
+    }
+
+    private void PartnerAmountIncreaseDto() {
         Scanner scanner = new Scanner(System.in);
 
-        // Pedir el ID del socio
         System.out.println("Ingrese ID del socio:");
         int id = scanner.nextInt();
 
-        // Pedir el monto a incrementar
         System.out.println("Ingrese monto a incrementar:");
         double monto = scanner.nextDouble();
 
         for (PartnerDto partner : partnerList) {
             if (partner.getId() == id) {
-                // Incrementar los fondos del socio
-                partner.partnerAmountDto(monto);
-                System.out.println("Fondos incrementados. Fondos actuales: " + partner.getpartnerAmountDto());
+                partner.setAmount(partner.getAmount() + monto);
+                System.out.println("Fondos incrementados. Fondos actuales: " + partner.getAmount());
                 return;
             }
         }
-
-        // Si no se encuentra el socio
         System.out.println("Socio no encontrado.");
     }
 }
 
-}
+
+

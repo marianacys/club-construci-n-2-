@@ -14,6 +14,8 @@ public interface PartnerDaoInterface {
     public PartnerDto findByUserId( UserDto userDto ) throws Exception;
     public PartnerDto findByPartnerId( InvoiceDto invoiceDto ) throws Exception;
     public PartnerDto findByGuestPartnerId( GuestDto guestDto ) throws Exception;
-    public long numberPertnersVIP( ) throws Exception;
+    public long numberPertnersVIP() throws Exception;
+    public void getPartnerAmountIncreaseDto() throws Exception;
+
 }
 

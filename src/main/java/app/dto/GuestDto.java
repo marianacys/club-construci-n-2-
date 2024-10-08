@@ -40,6 +40,9 @@ public class GuestDto implements GuestDtoInterface{
         this.status = status;
     }
     
-    
+    public boolean isActive() {
+    return "Activo".equals(status);
+    }
+   
 }
 
